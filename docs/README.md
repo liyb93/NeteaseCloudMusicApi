@@ -221,6 +221,24 @@
 203. 绑定手机
 204. 一起听状态
 205. 用户历史评论
+206. 云盘歌曲信息匹配纠正
+207. 云贝推歌
+208. 云贝推歌历史记录
+209. 已购单曲
+210. 获取mlog播放地址
+211. 将mlog id转为视频id
+212. vip成长值
+213. vip成长值获取记录
+214. vip任务
+215. 领取vip成长值
+216. 歌手粉丝
+216. 数字专辑详情
+217. 数字专辑销量
+218. 音乐人数据概况
+219. 音乐人播放趋势
+220. 音乐人任务
+221. 账号云豆数
+222. 领取云豆
 
 ## 安装
 
@@ -259,7 +277,7 @@ $ set HOST=127.0.0.1 && node app.js
 ```
 
 ## Vercel 部署
-v4.0.8 加入了 Vercel 配置文件,可以直接在 Vercel 下部署了,不需要自己的服务器
+v4.0.8 加入了 Vercel 配置文件,可以直接在 Vercel 下部署了,不需要自己的服务器(访问Vercel部署的接口,需要额外加一个realIP参数,如 `/song/url?id=191254&realIP=116.25.146.177`)
 ### 操作方法
 1. fork 此项目
 2. 在 Vercel 官网点击 `New Project`
@@ -446,7 +464,7 @@ v3.30.0后支持手动传入cookie,登录接口返回内容新增 `cookie` 字�
 
 **接口地址 :** `/login/qr/key`
 ##### 2. 二维码生成接口
-说明: 调用此接口传入上一个接口生成的key可生成二维码图片的base64和二维码信息,可使用base64展示图片,或者使用二维码信息内容自行使用第三方二维码生产库渲染二维码  
+说明: 调用此接口传入上一个接口生成的key可生成二维码图片的base64和二维码信息,可使用base64展示图片,或者使用二维码信息内容自行使用第三方二维码生成库渲染二维码  
 
 必选参数: `key`,由第一个接口生成  
 
@@ -826,7 +844,8 @@ tags: 歌单标签
 
 **必选参数 :** `uid` : 用户 id  
 
-**可选参数 :** 
+**可选参数 :**   
+
 `limit` : 返回数量 , 默认为 10
 
 `time`: 上一条数据的time,第一页不需要传,默认为0
@@ -1199,7 +1218,7 @@ tags: 歌单标签
 **可选参数 :** `order`: 可选值为 'new' 和 'hot', 分别对应最新和最热 , 默认为
 'hot'
 
-`cat`:`cat`: tag, 比如 " 华语 "、" 古风 " 、" 欧美 "、" 流行 ", 默认为
+`cat`: tag, 比如 " 华语 "、" 古风 " 、" 欧美 "、" 流行 ", 默认为
 "全部",可从歌单分类接口获取(/playlist/catlist)  
 
 `limit`: 取出歌单数量 , 默认为 50
@@ -1500,7 +1519,9 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 
 **接口地址 :** `/homepage/block/page` 
 
-**可选参数 :** `refresh`: 是否刷新数据,默认为true
+**可选参数 :** `refresh`: 是否刷新数据,默认为false
+
+`cursor`: 上一条数据返回的cursor
 
 
 ### 首页-发现-圆形图标入口列表
@@ -1537,7 +1558,7 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 
 `id` : 资源 id
 
-`tpye`: 数字 , 资源类型 , 对应歌曲 , mv, 专辑 , 歌单 , 电台, 视频对应以下类型
+`type`: 数字 , 资源类型 , 对应歌曲 , mv, 专辑 , 歌单 , 电台, 视频对应以下类型
 
 ```
 0: 歌曲
@@ -1655,7 +1676,7 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 
 `id` : 资源 id
 
-`tpye`: 数字 , 资源类型 , 对应歌曲 , mv, 专辑 , 歌单 , 电台, 视频对应以下类型
+`type`: 数字 , 资源类型 , 对应歌曲 , mv, 专辑 , 歌单 , 电台, 视频对应以下类型
 
 ```
 0: 歌曲
@@ -1687,7 +1708,7 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 **必选参数 :**   
 `id` : 资源 id, 如歌曲 id,mv id  
 
-`tpye`: 数字 , 资源类型 , 对应歌曲 , mv, 专辑 , 歌单 , 电台, 视频对应以下类型
+`type`: 数字 , 资源类型 , 对应歌曲 , mv, 专辑 , 歌单 , 电台, 视频对应以下类型
 ```
 0: 歌曲
 
@@ -1727,7 +1748,7 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 
 `t` : 是否点赞 ,1 为点赞 ,0 为取消点赞
 
-`tpye`: 数字 , 资源类型 , 对应歌曲 , mv, 专辑 , 歌单 , 电台, 视频对应以下类型
+`type`: 数字 , 资源类型 , 对应歌曲 , mv, 专辑 , 歌单 , 电台, 视频对应以下类型
 
 ```
 0: 歌曲
@@ -1807,7 +1828,7 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 
    `t`:1 发送, 2 回复
 
-   `tpye`: 数字,资源类型,对应歌曲,mv,专辑,歌单,电台,视频对应以下类型
+   `type`: 数字,资源类型,对应歌曲,mv,专辑,歌单,电台,视频对应以下类型
 
    ```
    0: 歌曲
@@ -1841,7 +1862,7 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 
    `t`:0 删除
 
-   `tpye`: 数字,资源类型,对应歌曲,mv,专辑,歌单,电台,视频对应以下类型  
+   `type`: 数字,资源类型,对应歌曲,mv,专辑,歌单,电台,视频对应以下类型  
    
 
    ```
@@ -1932,7 +1953,7 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 
 ### 获取歌曲详情
 
-说明 : 调用此接口 , 传入音乐 id(支持多个 id, 用 `,` 隔开), 可获得歌曲详情(注意:歌曲封面现在需要通过专辑内容接口获取)
+说明 : 调用此接口 , 传入音乐 id(支持多个 id, 用 `,` 隔开), 可获得歌曲详情
 
 **必选参数 :** `ids`: 音乐 id, 如 `ids=347230`
 
@@ -1940,8 +1961,7 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 
 **调用例子 :** `/song/detail?ids=347230`,`/song/detail?ids=347230,347231`
 
-返回数据如下图 :
-![获取歌曲详情](https://raw.githubusercontent.com/Binaryify/NeteaseCloudMusicApi/master/static/songDetail.png)
+
 
 ### 获取专辑内容
 
@@ -1952,9 +1972,6 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 **接口地址 :** `/album`
 
 **调用例子 :** `/album?id=32311`
-
-返回数据如下图 :
-![获取专辑内容](https://raw.githubusercontent.com/Binaryify/NeteaseCloudMusicApi/master/static/%E4%B8%93%E8%BE%91.png)
 
 
 ### 专辑动态信息
@@ -2631,6 +2648,20 @@ type : 地区
 
 **调用例子 :** `/cloud`
 
+### 云盘歌曲信息匹配纠正
+说明 : 登录后调用此接口,可对云盘歌曲信息匹配纠正,如需取消匹配,asid需要传0  
+
+**必选参数 :**   
+`uid`: 用户id   
+
+`sid`: 云盘的歌曲id   
+
+`asid`: 要匹配的歌曲id 
+
+**接口地址 :** `/cloud/match`
+
+**调用例子 :** `/cloud/match?uid=32953014&sid=aaa&asid=bbb` `/cloud/match?uid=32953014&sid=bbb&asid=0`
+
 ### 电台banner
 说明 : 调用此接口,可获取电台banner
 
@@ -3259,6 +3290,182 @@ type='1009' 获取其 id, 如`/search?keywords= 代码时间 &type=1009`
 
 **调用例子 :** 使用GET方式:`/batch?/api/v2/banner/get={"clientType":"pc"}` 使用POST方式传入参数:`{ "/api/v2/banner/get": {"clientType":"pc"} }`
 
+### 云贝推歌
+
+说明 : 登录后调用此接口 , 传入歌曲 id, 可以进行云贝推歌
+
+**必选参数 :** `id` : 歌曲 id
+
+**可选参数 :** `reason` : 推歌理由
+
+**接口地址 :** `/yunbei/rcmd/song`
+
+**调用例子 :** `/yunbei/rcmd/song?id=65528`  `/yunbei/rcmd/song?id=65528&reason=人间好声音推荐给你听`
+
+### 云贝推歌历史记录
+
+说明 : 登录后调用此接口 , 可以获得云贝推歌历史记录
+
+**可选参数 :** `size` : 返回数量 , 默认为 20
+
+`cursor` : 返回数据的 cursor, 默认为 '' , 传入上一次返回结果的 cursor,将会返回下一页的数据
+
+**接口地址 :** `/yunbei/rcmd/song/history`
+
+**调用例子 :** `/yunbei/rcmd/song/history?size=10`
+
+### 已购单曲
+说明 :登录后调用此接口可获取已购买的单曲  
+
+**可选参数 :** `limit`: 取出评论数量 , 默认为 20
+
+`offset`: 偏移数量 , 用于分页 , 如 :( 评论页数 -1)\*10, 其中 10 为 limit 的值  
+
+**接口地址 :** `/song/purchased`
+
+**调用例子 :** `/song/purchased?limit=10`
+
+### 获取mlog播放地址
+
+说明 : 调用此接口 , 传入mlog id, 可获取mlog播放地址
+
+**必选参数 :** `id` : mlog id
+
+**可选参数 :** `res`: 分辨率 , 默认为 1080
+
+**接口地址 :** `/mlog/url`
+
+**调用例子 :** `/mlog/url?id=a1qOVPTWKS1ZrK8`
+
+### 将mlog id转为视频id
+
+说明 : 调用此接口 , 传入mlog id, 可获取video id，然后通过`video/url` 获取播放地址
+
+**必选参数 :** `id` : mlog id
+
+**接口地址 :** `/mlog/to/video`
+
+**调用例子 :** `/mlog/to/video?id=a1qOVPTWKS1ZrK8`
+
+### vip成长值
+
+说明 : 登陆后调用此接口 , 可获取当前会员成长值
+
+**接口地址 :** `/vip/growthpoint`
+
+**调用例子 :** `/vip/growthpoint`
+
+### vip成长值获取记录
+说明 :登录后调用此接口可获取会员成长值领取记录  
+
+**可选参数 :** `limit`: 取出评论数量 , 默认为 20
+
+`offset`: 偏移数量 , 用于分页 , 如 :( 评论页数 -1)\*10, 其中 10 为 limit 的值  
+
+**接口地址 :** `/vip/growthpoint/details`
+
+**调用例子 :** `/vip/growthpoint/details?limit=10`
+
+### vip任务
+
+说明 : 登陆后调用此接口 , 可获取会员任务
+
+**接口地址 :** `/vip/tasks`
+
+**调用例子 :** `/vip/tasks`
+
+### 领取vip成长值
+
+说明 : 登陆后调用此接口 , 可获取已完成的会员任务的成长值奖励
+
+**必选参数 :** `ids` : 通过`/vip/tasks`获取到的`unGetIds`
+
+**接口地址 :** `/vip/growthpoint/get`
+
+**调用例子 :** `/vip/growthpoint/get?ids=7043206830_7` `/vip/growthpoint/get?ids=8613118351_1,8607552957_1`
+
+### 歌手粉丝
+
+说明 : 调用此接口 , 传入歌手 id, 可获取歌手粉丝
+
+**必选参数 :** `id` : 歌手 id
+
+**可选参数 :** `limit`: 取出粉丝数量 , 默认为 20
+
+`offset`: 偏移数量 , 用于分页 , 如 :( 评论页数 -1)\*10, 其中 10 为 limit 的值 
+
+**接口地址 :** `/artist/fans`
+
+**调用例子 :** `/artist/fans?id=2116&limit=10&offset=0`
+
+### 数字专辑详情
+
+说明 : 调用此接口 , 传入专辑 id, 可获取数字专辑信息
+
+**必选参数 :** `id` : 专辑 id
+
+**接口地址 :** `/digitalAlbum/detail`
+
+**调用例子 :** `/digitalAlbum/detail?id=120605500`
+
+### 数字专辑销量
+
+说明 : 调用此接口 , 传入专辑 id, 可获取数字专辑销量
+
+**必选参数 :** `ids` : 专辑 id, 支持多个,用`,`隔开
+
+**接口地址 :** `/digitalAlbum/sales`
+
+**调用例子 :** `/digitalAlbum/sales?ids=120605500` `/digitalAlbum/sales?ids=120605500,125080528`
+
+### 音乐人数据概况
+
+说明 : 音乐人登录后调用此接口 , 可获取统计数据概况
+
+**接口地址 :** `/musician/data/overview`
+
+**调用例子 :** `/musician/data/overview`
+
+### 音乐人播放趋势
+
+说明 : 音乐人登录后调用此接口 , 可获取歌曲播放趋势
+
+**必选参数 :** `startTime` : 开始时间
+
+`endTime` : 结束时间
+
+**接口地址 :** `/musician/play/trend`
+
+**调用例子 :** `/musician/play/trend?startTime=2021-05-24&endTime=2021-05-30`
+
+### 音乐人任务
+
+说明 : 音乐人登录后调用此接口 , 可获取音乐人任务
+
+**接口地址 :** `/musician/tasks`
+
+**调用例子 :** `/musician/tasks`
+
+### 账号云豆数
+
+说明 : 音乐人登录后调用此接口 , 可获取账号云豆数
+
+**接口地址 :** `/musician/cloudbean`
+
+**调用例子 :** `/musician/cloudbean`
+
+### 领取云豆
+
+说明 : 音乐人登录后调用此接口 , 可领取已完成的音乐人任务的云豆奖励
+
+**必选参数 :** `id` : 任务id，通过`/musician/tasks`获取到的`userMissionId`即为任务id
+
+`period` : 通过`/musician/tasks`获取
+
+**接口地址 :** `/musician/cloudbean/obtain`
+
+**调用例子 :** `/musician/cloudbean/obtain?id=7036416928&period=1`
+
 
 
 ## 离线访问此文档
@@ -3267,9 +3474,7 @@ type='1009' 获取其 id, 如`/search?keywords= 代码时间 &type=1009`
 
 ## 关于此文档
 
-此文档由 [docsify](https://github.com/QingWei-Li/docsify/) 生成 docsify 是一个动
-态生成文档网站的工具。不同于 GitBook、Hexo 的地方是它不会生成将 .md 转成 .html
-文件，所有转换工作都是在运行时进行。
+此文档由 [docsify](https://github.com/QingWei-Li/docsify/) 生成 docsify 是一个动态生成文档网站的工具。不同于 GitBook、Hexo 的地方是它不会生成将 .md 转成 .html 文件，所有转换工作都是在运行时进行。
 
 ## License
 
